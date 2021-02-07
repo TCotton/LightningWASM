@@ -53,7 +53,7 @@ function getImage(fileData) {
 
 document.addEventListener('DOMContentLoaded', function () {
 
-  dropboxElement = document.getElementById("dropbox");
+  dropboxElement = document.getElementById("input");
   consoleElement = document.getElementById("console");
   outputElement = document.getElementById("output").children[0];
   //initWorker();

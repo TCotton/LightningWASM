@@ -1,6 +1,7 @@
 import LIGHTNING from '../config/config';
 import Backbone from "backbone";
 import _ from 'underscore';
+import {errorWrapper} from '../templates';
 LIGHTNING.View.AddImage = Backbone.View.extend(
     _.extend({}, LIGHTNING.Constants, LIGHTNING.Mixings, {
         el: '#wrapper',
@@ -14,7 +15,7 @@ LIGHTNING.View.AddImage = Backbone.View.extend(
         },
 
         initialize: function () {
-            this.template = this.newTemplate('errorWrapper');
+            this.template = this.newTemplate(errorWrapper);
             document.getElementById('input').setAttribute('data-nonce', this.nonce);
             this.checkboxSettingsPageLoad();
         },
@@ -70,7 +71,7 @@ LIGHTNING.View.AddImage = Backbone.View.extend(
         },
 
         submitImage: function (e, dataTransfer) {
-            let file, error, nonce;
+            let file, nonce;
             // added nonce for CRSF protection
             nonce = document.getElementById('input').getAttribute('data-nonce');
             if (nonce !== this.nonce) return;
