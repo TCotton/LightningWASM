@@ -61,7 +61,7 @@ p {
     min-width: 500px;
     display: grid;
     place-items: center;
-    background: rgba(248, 245, 215, 1);
+    background-color: rgba(248, 245, 215, 1);
     background-image: radial-gradient(#ffffff 20%, transparent 20%),
     radial-gradient(#ffffff 20%, transparent 20%);
     background-position: 0 0, 5px 5px;
@@ -118,7 +118,7 @@ p {
 main {
   width: 90%;
   margin: var(--marginx7) auto var(--marginx2) auto;
-  padding: 20px;
+  padding: var(--marginx4) 20px;
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 1) 100%);
   transform: skew(10deg);
   border-radius: 30px;
