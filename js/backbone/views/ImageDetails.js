@@ -9,7 +9,6 @@ LIGHTNING.View.ImageDetails = Backbone.View.extend(
         },
 
         getImageDetails: function () {
-            "use strict";
             let image = this.model.get('image');
             if (image == null) return;
             // set model defaults based on image

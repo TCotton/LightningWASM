@@ -887,17 +887,13 @@ https://kuler.adobe.com/1940-Superman-color-theme-88870/
     -moz-transform: rotate(-90deg) scaleY(-1);
     transform: rotate(-90deg) scaleY(-1);
   }
-
 }
 
 #instructions-image {
-  -webkit-transform: skew(10deg);
-  -moz-transform: skew(10deg);
   transform: skew(10deg);
   width: 50%;
   max-width: 622px;
 }
-
 #file-wrapper {
   height: 100px;
   width: 100%;
@@ -920,11 +916,7 @@ https://kuler.adobe.com/1940-Superman-color-theme-88870/
   font-family: RoyLichtensteinBold, sans-serif;
   text-align: center;
   line-height: 100px;
-  -webkit-transform: skew(-10deg);
-  -moz-transform: skew(-10deg);
   transform: skew(-10deg);
-  -webkit-transition: all 0.4s;
-  -ms-transition: all 0.4s;
   transition: all 0.4s;
 }
 
@@ -945,8 +937,6 @@ input[type=file] {
 
 .png-checkbox {
   text-align: center;
-  -webkit-transform: skew(-10deg);
-  -moz-transform: skew(-10deg);
   transform: skew(-10deg);
   margin: 20px 0 0 0;
   font-size: 1.6em;
@@ -973,7 +963,6 @@ input[type=file] {
 .checked-slider::after {
   content: 'ON';
   font-size: 0.9em;
-  line-height: 26px;
   font-family: anonymous-pro, monospace;
   color: #465CBC;
   position: absolute;
@@ -984,7 +973,6 @@ input[type=file] {
 .checked-slider::before {
   content: 'OFF';
   font-size: 0.9em;
-  line-height: 26px;
   font-family: anonymous-pro, monospace;
   color: #465CBC;
   position: absolute;
@@ -997,17 +985,14 @@ input[type=file] {
   width: 34px;
   height: 20px;
   border-radius: 50px;
-  -ms-transition: all .4s ease;
-  -webkit-transition: all .4s ease;
   transition: all .4s ease;
   cursor: pointer;
   position: absolute;
   top: 3px;
   left: 3px;
   z-index: 1;
-  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3);
   background: #fcfff4;
-  background: -webkit-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
   background: linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
 }
 
@@ -1024,8 +1009,6 @@ input[type=checkbox] {
   text-align: center;
   margin: 20px 0 0 0;
   color: #B0252A;
-  -webkit-transform: skew(-10deg);
-  -moz-transform: skew(-10deg);
   transform: skew(-10deg);
 }
 
@@ -1043,7 +1026,6 @@ input[type=checkbox] {
   display: block;
   width: 530px;
   font-family: RoyLichtensteinBold, sans-serif;
-  line-height: 30px;
   font-size: 0.75em;
 }
 
@@ -1211,7 +1193,6 @@ input[type=checkbox] {
   color: #ffffff;
   font-size: 3em;
   font-family: RoyLichtensteinBold, sans-serif;
-  line-height: 30px;
   text-align: center;
   height: 300px;
 

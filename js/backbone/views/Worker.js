@@ -12,7 +12,6 @@ LIGHTNING.View.Worker = Backbone.View.extend(
 
     runWebWorker: function () {
       // if PNG file then run the web worker and use the FileReader API
-      "use strict";
       if (this.model.get('image') == null) return;
       if (this.model.get('image') !== null && this.model.get('image').type !== 'image/png') return;
       if (document.getElementById('nopng').checked) return;
@@ -37,7 +36,6 @@ LIGHTNING.View.Worker = Backbone.View.extend(
     },
 
     webWorker: function () {
-      "use strict";
       this.worker.onmessage = function (event) {
         let message = event.data;
         switch (message.type) {
@@ -58,9 +56,7 @@ LIGHTNING.View.Worker = Backbone.View.extend(
           default:
             console.log('I am ready');
         }
-
       }.bind(this);
-
     },
 
     render: function () {

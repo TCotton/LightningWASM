@@ -17,10 +17,8 @@
   <!-- Place favicon.ico in the root directory -->
 
   <link rel="stylesheet" href="css/index.scss">
-
   <meta name="theme-color" content="#fafafa">
 </head>
-
 <body>
 
 <!-- Add your site or application content here -->
@@ -28,36 +26,38 @@
   <header id="title" class="clearfix">
     <div id="inner-title">
       <div id="inner-title-h1">
-        <h1>Lightning</h1>
-        <img src="img/lightning.png" alt="lightning bolt"/>
+        <h1>Lightning <img src="img/lightning.png" alt="lightning bolt"/></h1>
+        <h2>Image compression</h2>
       </div>
-      <h2>Upload an image, optimize the PNG, create a data URI</h2>
+      <h3>Upload an image, optimize the PNG or JPEG, create a data URI</h3>
     </div>
   </header>
   <main>
     <div id="file-wrapper">
-      <p>Click to browse for a file or drag and drop</p>
+      <div class="file-wrapper-inside">
+        <p>Click to browse for a file or drag and drop</p>
+      </div>
       <input type="file" id="input" draggable="true">
     </div>
-    <div class="png-checkbox clearfix">
+  <!--  <div class="png-checkbox clearfix">
       <div class="checked-slider">
         <input type="checkbox" value="None" id="nopng" name="nopng"/>
         <label for="nopng"></label>
         <p>Turn off PngCrush</p>
       </div>
-    </div>
+    </div>-->
     <div class="output clearfix">
+      <img src="img/holding-image.svg" width="783" height="596" alt="instructions" id="instructions-image"/>
+
       <div id="instructions">
         <div id="inner-instructions">
           <p>Lightning.sx converts PNG, JPEG and Gif images to a data URI. If the image is a PNG it uses a
             client-side JavaScript port of PngCrush to optimise your image first.</p>
-
           <p>It works fine in Firefox and Chrome on Mac and Windows. It does work in IE10 but using client-side
             PngCrush in this browser takes forever and a day. Works fine using Mac Safari but not on
             Windows.</p>
         </div>
       </div>
-      <img src="img/main-image.png" width="622" height="622" alt="instructions" id="instructions-image"/>
       <div id="credits">
         <a href="https://andywalpole.me/">Created by Andy Walpole</a>
       </div>
@@ -65,82 +65,51 @@
   </main>
 </div>
 
-
 <div id="holding-image">
-
   <div id="holding-image-inner">
-
-    <img src="img/holding-image.png"
+    <img src="img/main-image.png" height="622" width="622"
          alt="The PNG image is being optimized. Hold on, it's coming"/>
-
   </div>
-
 </div>
 <div id="holding-background"></div>
 <script id="errorWrapper" type="text/template">
-
   <div class="inner-error">
-
     <img src="img/error-message.png" width="647" height="704"
          alt="Mister, I hear if you upload anything other PNG, GIF or JPEGs then the sheriff is gonna start shooting kittens"/>
-
   </div>
-
 </script>
 <script id="outputWrapper" type="text/template">
-
   <div class="left">
     <div class="image-name"><%- imageName %></div>
-
     <div class="dataURI">
       <pre><%= dataURI %></pre>
     </div>
-
     <div class="image-info">
-
       <p><span>Original file size:</span> <%= originalImageSize %> bytes</p>
-
       <% if (fileSizeReduction !== null) { %>
-
       <p><span>After optimisation:</span> <%= fileSizeReduction %></p>
-
       <% } else { %>
-
       <p><span>No image optimisation has taken place</span></p>
-
       <% } %>
-
       <p><span>Data URI size:</span> <%= dataURIsize %> bytes</p>
-
       <% var elapsed = (end - start) / 1000 %>
-
       <p>Processed in <% print (elapsed) %> seconds</p>
-
       <% if (fileSizeReduction !== null && (originalImageSize < dataURIsize)) { %>
-
       <p class="last">If the image has been optimised then why is the returned data URI still
         larger?</p>
-
       <p class="last-hidden">Data URIs are always bigger than an image. So, even though the image has been shrunk,
         once it is converted to a data URI it may still be larger</p>
-
       <% } %>
-
     </div>
 
   </div>
   <div class="right">
-
     <div class="right-image">
-
       <a href="<%= dataURI %>" download="<%- imageName %>">
         <img src="<%= dataURI %>"/>
       </a>
-
       <p>Left click on the above image to download</p>
-
     </div>
-
   </div>
 
 </script>

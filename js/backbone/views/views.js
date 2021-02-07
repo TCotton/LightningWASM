@@ -1,3 +1,6 @@
+import LIGHTNING from '../config/config';
+import Backbone from "backbone";
+import _ from 'underscore';
 LIGHTNING.View.AddImage = Backbone.View.extend(
   _.extend({}, LIGHTNING.Constants, LIGHTNING.Mixings, {
     el: '#input',
@@ -8,7 +11,6 @@ LIGHTNING.View.AddImage = Backbone.View.extend(
       this.template = this.newTemplate('errorWrapper');
     },
     submitImage: function (e) {
-      "use strict";
       let file, error, output;
       // remove previous html and return model to its default values
       this.model.clear().set(this.model.defaults);
@@ -43,7 +45,6 @@ LIGHTNING.View.AddImage = Backbone.View.extend(
 
   }));
 
-
 LIGHTNING.View.Worker = Backbone.View.extend(
   _.extend({}, LIGHTNING.Constants, LIGHTNING.Mixings, {
 
@@ -51,7 +52,6 @@ LIGHTNING.View.Worker = Backbone.View.extend(
       this.template = this.newTemplate('outputWrapper');
       this.webWorker();
       this.model.on('change:image', this.runWebWorker, this);
-
     },
 
     runWebWorker: function () {
@@ -83,7 +83,6 @@ LIGHTNING.View.Worker = Backbone.View.extend(
     },
 
     webWorker: function () {
-      "use strict";
       this.worker.onmessage = function (event) {
         let message = event.data;
         switch (message.type) {
@@ -123,9 +122,8 @@ LIGHTNING.View.ImageDetails = Backbone.View.extend(
     },
 
     getImageDetails: function () {
-      "use strict";
       let image = this.model.get('image');
-      if (image == undefined) return;
+      if (image == null) return;
       // set model defaults based on image
       switch (image.type) {
         case 'image/png':

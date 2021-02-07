@@ -70,7 +70,6 @@ LIGHTNING.View.AddImage = Backbone.View.extend(
         },
 
         submitImage: function (e, dataTransfer) {
-            "use strict";
             let file, error, nonce;
             // added nonce for CRSF protection
             nonce = document.getElementById('input').getAttribute('data-nonce');
