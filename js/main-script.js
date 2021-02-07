@@ -1,173 +1,149 @@
 window.URL = window.URL || window.webkitURL;
 
-var file;
-
-var dropboxElement, consoleElement, outputElement;
-
-var worker;
+let file;
+let dropboxElement, consoleElement, outputElement;
+let worker;
 
 function initWorker() {
 
-    worker = new Worker("worker.js");
+  /* worker = new Worker("worker.js");
 
-    worker.onmessage = function (event) {
+   worker.onmessage = function (event) {
 
-        var message = event.data;
+       var message = event.data;
 
-        if (message.type == "stdout") {
-            consoleElement.innerHTML += message.line + '\n';
-        } else if (message.type == "start") {
-            consoleElement.innerHTML = '';
-        } else if (message.type == "done") {
+       if (message.type == "stdout") {
+           consoleElement.innerHTML += message.line + '\n';
+       } else if (message.type == "start") {
+           consoleElement.innerHTML = '';
+       } else if (message.type == "done") {
 
-            consoleElement.innerHTML += "Done!";
+           consoleElement.innerHTML += "Done!";
 
-            var imageElement = getImage(message.data);
+           var imageElement = getImage(message.data);
 
-            outputElement.appendChild(imageElement);
+           outputElement.appendChild(imageElement);
 
-            var downloadLinkElement = document.createElement('a');
+           var downloadLinkElement = document.createElement('a');
 
-            downloadLinkElement.className = 'download';
-            downloadLinkElement.download = file.name;
-            downloadLinkElement.href = imageElement.src;
-            downloadLinkElement.innerHTML = 'Download';
+           downloadLinkElement.className = 'download';
+           downloadLinkElement.download = file.name;
+           downloadLinkElement.href = imageElement.src;
+           downloadLinkElement.innerHTML = 'Download';
 
-            document.body.appendChild(downloadLinkElement);
+           document.body.appendChild(downloadLinkElement);
 
-            var cloneObject = document.getElementsByName('#wrapper');
-            closeObject.parentNode.removeChild(document.getElementsByName('#wrapper'));
-            document.body.appendChild(cloneObject);
+           var cloneObject = document.getElementsByName('#wrapper');
+           closeObject.parentNode.removeChild(document.getElementsByName('#wrapper'));
+           document.body.appendChild(cloneObject);
 
-        } else if (message.type == "ready") {
-            consoleElement.innerHTML = "I'm ready! ..."
-        }
-    };
+       } else if (message.type == "ready") {
+           consoleElement.innerHTML = "I'm ready! ..."
+       }
+   };*/
 }
 
-
 function getImage(fileData) {
-
-    var blob = new Blob([fileData], {type: 'image/png'});
-
-    var src = window.URL.createObjectURL(blob);
-
-    var imageElement = document.createElement('img');
-
-    imageElement.src = src;
-
-    return imageElement;
+  let blob = new Blob([fileData], {type: 'image/png'});
+  let src = window.URL.createObjectURL(blob);
+  let imageElement = document.createElement('img');
+  imageElement.src = src;
+  return imageElement;
 }
 
 document.addEventListener('DOMContentLoaded', function () {
 
-    dropboxElement = document.getElementById("dropbox");
-    consoleElement = document.getElementById("console");
-    outputElement = document.getElementById("output").children[0];
+  dropboxElement = document.getElementById("dropbox");
+  consoleElement = document.getElementById("console");
+  outputElement = document.getElementById("output").children[0];
+  //initWorker();
+  function noopHandler(event) {
+    event.preventDefault();
+  }
 
-    initWorker();
+  dropboxElement.addEventListener("dragenter", noopHandler, false);
+  dropboxElement.addEventListener("dragexit", noopHandler, false);
 
-    function noopHandler(event) {
-        event.preventDefault();
+  dropboxElement.addEventListener("dragover", function (event) {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = 'copy';
+  }, false);
+
+  let inputElement = document.getElementById("input");
+  inputElement.addEventListener("change", function (event) {
+    let file = this.files[0];
+    if (file.type !== "image/png") {
+      alert('this is not a png image');
+    }
+    let fileReader = new FileReader();
+
+    function onloadend(event) {
+      let arrayBuffer = event.target.result;
+      let data = new Uint8Array(arrayBuffer);
+      worker.postMessage({
+        'type': 'file',
+        'data': data
+      });
+      worker.postMessage({
+        'type': 'command',
+        'command': 'go'
+      });
     }
 
-    dropboxElement.addEventListener("dragenter", noopHandler, false);
-    dropboxElement.addEventListener("dragexit", noopHandler, false);
+    if (fileReader.addEventListener) {
+      fileReader.addEventListener('loadend', onloadend, false);
+    } else {
+      fileReader.onloadend = onloadend;
+    }
 
-    dropboxElement.addEventListener("dragover", function (event) {
-        event.preventDefault();
+    fileReader.readAsArrayBuffer(file);
+    event.preventDefault();
+  }, false);
 
-        event.dataTransfer.dropEffect = 'copy';
-    }, false);
+  /*
 
+   dropboxElement.addEventListener("drop", function (event) {
 
-    var inputElement = document.getElementById("input");
-    inputElement.addEventListener("change", function (event) {
+   event.preventDefault();
 
-        var file = this.files[0];
+   if (dropboxElement.className == "disabled" || event.dataTransfer.files.length == 0) return; // TODO: Error message
 
-        if (file.type !== "image/png") {
+   var files = event.dataTransfer.files;
 
-            alert('this is not a png image');
+   file = files[0];
 
-        }
-
-        var fileReader = new FileReader();
-
-        function onloadend(event) {
-
-            var arrayBuffer = event.target.result;
-
-            var data = new Uint8Array(arrayBuffer);
-
-            worker.postMessage({
-                'type': 'file',
-                'data': data
-            });
-
-            worker.postMessage({
-                'type': 'command',
-                'command': 'go'
-            });
-        }
-
-        if (fileReader.addEventListener) {
-            fileReader.addEventListener('loadend', onloadend, false);
-        } else {
-            fileReader.onloadend = onloadend;
-        }
-
-        fileReader.readAsArrayBuffer(file);
+   if (file.type != "image/png") return; // TODO: Error message
 
 
-        event.preventDefault();
+   dropboxElement.className = "disabled";
 
-    }, false);
+   var fileReader = new FileReader();
 
-    /*
+   function onloadend(event) {
 
-     dropboxElement.addEventListener("drop", function (event) {
+   var arrayBuffer = event.target.result;
 
-     event.preventDefault();
+   var data = new Uint8Array(arrayBuffer);
 
-     if (dropboxElement.className == "disabled" || event.dataTransfer.files.length == 0) return; // TODO: Error message
-
-     var files = event.dataTransfer.files;
-
-     file = files[0];
-
-     if (file.type != "image/png") return; // TODO: Error message
+   worker.postMessage({
+   'type': 'file',
+   'data': data
+   });
 
 
-     dropboxElement.className = "disabled";
+   worker.postMessage({
+   'type': 'command',
+   'command': 'go'
+   });
+   }
 
-     var fileReader = new FileReader();
+   if (fileReader.addEventListener) {
+   fileReader.addEventListener('loadend', onloadend, false);
+   } else {
+   fileReader.onloadend = onloadend;
+   }
 
-     function onloadend(event) {
-
-     var arrayBuffer = event.target.result;
-
-     var data = new Uint8Array(arrayBuffer);
-
-     worker.postMessage({
-     'type': 'file',
-     'data': data
-     });
-
-
-     worker.postMessage({
-     'type': 'command',
-     'command': 'go'
-     });
-     }
-
-     if (fileReader.addEventListener) {
-     fileReader.addEventListener('loadend', onloadend, false);
-     } else {
-     fileReader.onloadend = onloadend;
-     }
-
-     fileReader.readAsArrayBuffer(file);
-     }, false);
-     */
+   fileReader.readAsArrayBuffer(file);
+   }, false);
+   */
 });

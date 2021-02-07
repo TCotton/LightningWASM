@@ -3,9 +3,9 @@ var Module = {
     'noFSInit': true
 };
 //const pngCrush = './pngcrush.js';
-importScripts('../static/pngcrush.js');
+//importScripts('../static/pngcrush.js');
 
-var line = '';
+let line = '';
 
 Module.preRun = function () {
 
@@ -23,14 +23,11 @@ Module.preRun = function () {
             line += String.fromCharCode(data);
         }
     });
-
 };
 
 function getFileData(fileName) {
-
-    var data = FS.root.contents[fileName].contents;
+    const data = FS.root.contents[fileName].contents;
     return new Uint8Array(data).buffer;
-
 }
 
 onmessage = function (event) {
