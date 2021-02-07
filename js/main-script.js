@@ -5,26 +5,19 @@ let dropboxElement, consoleElement, outputElement;
 let worker;
 
 function initWorker() {
-
-  /* worker = new Worker("worker.js");
-
+  worker = new Worker("worker.js");
    worker.onmessage = function (event) {
+       const message = event.data;
 
-       var message = event.data;
-
-       if (message.type == "stdout") {
+       if (message.type === "stdout") {
            consoleElement.innerHTML += message.line + '\n';
-       } else if (message.type == "start") {
+       } else if (message.type === "start") {
            consoleElement.innerHTML = '';
-       } else if (message.type == "done") {
-
+       } else if (message.type === "done") {
            consoleElement.innerHTML += "Done!";
-
-           var imageElement = getImage(message.data);
-
+           const imageElement = getImage(message.data);
            outputElement.appendChild(imageElement);
-
-           var downloadLinkElement = document.createElement('a');
+           const downloadLinkElement = document.createElement('a');
 
            downloadLinkElement.className = 'download';
            downloadLinkElement.download = file.name;
@@ -32,15 +25,34 @@ function initWorker() {
            downloadLinkElement.innerHTML = 'Download';
 
            document.body.appendChild(downloadLinkElement);
-
-           var cloneObject = document.getElementsByName('#wrapper');
+           let cloneObject = document.getElementsByName('#wrapper');
            closeObject.parentNode.removeChild(document.getElementsByName('#wrapper'));
            document.body.appendChild(cloneObject);
 
-       } else if (message.type == "ready") {
+       } else if (message.type === "ready") {
            consoleElement.innerHTML = "I'm ready! ..."
        }
-   };*/
+   };
+}
+
+function newWorkers() {
+  const worker = new Worker('./new_worker.js');
+  worker.onmessage = e => {
+    switch (e.data.type) {
+      case 'log':
+        log(e.data.msg);
+        break;
+      case 'logError':
+        logError(e.data.msg);
+        break;
+      case 'result':
+        showResult(e.data.result);
+        break;
+      case 'error':
+        showErrorResult(e.data.error);
+        break;
+    }
+  };
 }
 
 function getImage(fileData) {
@@ -56,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function () {
   dropboxElement = document.getElementById("input");
   consoleElement = document.getElementById("console");
   outputElement = document.getElementById("output").children[0];
-  //initWorker();
+  newWorkers();
   function noopHandler(event) {
     event.preventDefault();
   }
