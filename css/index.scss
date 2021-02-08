@@ -288,3 +288,25 @@ input[type=file] {
   transform: skew(10deg);
 }
 
+.inner-error {
+  width: 647px;
+  margin: 0 auto;
+  position: relative;
+  transform: skew(5deg,5deg);
+}
+
+.inner-error::after {
+  content: "Mister, I hear if you upload anything other PNG, GIF or JPEGs then the sheriff is gonna start shooting kittens";
+  position: absolute;
+  left: 60px;
+  top: 50px;
+  display: block;
+  width: 540px;
+  font-family: RoyLichtensteinBold, sans-serif;
+  font-size: 2rem;
+  transform: skew(0deg,0deg);
+  -webkit-text-fill-color: #010000;
+  -webkit-text-stroke-color: #b3d4fc;
+  -webkit-text-stroke-width: 1px;
+}
+

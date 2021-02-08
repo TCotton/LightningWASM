@@ -16,7 +16,8 @@ LIGHTNING.Model.parent = Backbone.Model.extend({
         error: null,
         imageType: null,
         start: null,
-        end: null
+        end: null,
+        imageError: null
     },
 
     initialize: function () {

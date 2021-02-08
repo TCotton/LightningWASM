@@ -61,7 +61,6 @@ LIGHTNING.View.Worker = Backbone.View.extend(
 
     runWebWorker: function () {
       // if PNG file then run the web worker and user the FileReader API
-      "use strict";
       if (this.model.get('image') == null) return;
       if (this.model.get('image') !== null && this.model.get('image').type !== 'image/png') return;
       let fileReader = new FileReader();
