@@ -107,7 +107,7 @@ p {
 
 #title {
   margin: var(--marginx2) auto;
-  padding: var(--marginx4) var(--marginx5);
+  padding: var(--margin) var(--marginx4) var(--marginx2) var(--marginx4);
   transform: skew(-10deg);
   border-radius: 30px;
   box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.6);
@@ -210,7 +210,7 @@ main {
 }
 
 #title h1 {
-  @include font-calculator($baseFontFamily, 70px);
+  @include font-calculator($baseFontFamily, 60px);
   color: #465CBC;
   transform: skew(0deg);
   //margin: 0 0 0 0;
@@ -220,12 +220,12 @@ main {
 }
 
 #title h2 {
-  @include font-calculator($baseFontFamily, 24px);
+  @include font-calculator($baseFontFamily, 22px);
   transform: skew(10deg);
 }
 
 #title h3 {
-  @include font-calculator($baseFontFamily, 20px);
+  @include font-calculator($baseFontFamily, 18px);
   transform: skew(10deg);
 }
 
@@ -242,7 +242,7 @@ main {
   height: 100%;
   width: 100%;
   margin: 0 auto;
-  padding: var(--marginx7) var(--marginx7);
+  padding: var(--marginx4) var(--marginx4);
   background: #B0252A;
   border-radius: 30px;
   position: relative;

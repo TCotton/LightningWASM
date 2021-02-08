@@ -1,7 +1,9 @@
 import LIGHTNING from '../config/config';
+const jquery = require("jquery")
+window.$ = window.jQuery = jquery;
 import Backbone from "backbone";
+Backbone.$ = window.$;
 import _ from 'underscore';
-import {outputWrapper, errorWrapper} from '../templates';
 LIGHTNING.View.AddImage = Backbone.View.extend(
   _.extend({}, LIGHTNING.Constants, LIGHTNING.Mixings, {
     el: '#input',
@@ -9,7 +11,7 @@ LIGHTNING.View.AddImage = Backbone.View.extend(
       'change': 'submitImage'
     },
     initialize: function () {
-      this.template = this.newTemplate(errorWrapper);
+      this.template = this.newTemplate('errorWrapper');
     },
     submitImage: function (e) {
       let file, error, output;
@@ -52,7 +54,7 @@ LIGHTNING.View.Worker = Backbone.View.extend(
   _.extend({}, LIGHTNING.Constants, LIGHTNING.Mixings, {
 
     initialize: function () {
-      this.template = this.newTemplate(outputWrapper);
+      this.template = this.newTemplate('outputWrapper');
       this.webWorker();
       this.model.on('change:image', this.runWebWorker, this);
     },
@@ -120,7 +122,7 @@ LIGHTNING.View.ImageDetails = Backbone.View.extend(
   _.extend({}, LIGHTNING.Constants, LIGHTNING.Mixings, {
 
     initialize: function () {
-      this.template = this.newTemplate(outputWrapper);
+      this.template = this.newTemplate('outputWrapper');
       this.model.on('change:image', this.getImageDetails, this);
     },
 

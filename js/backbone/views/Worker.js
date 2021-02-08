@@ -1,5 +1,8 @@
 import LIGHTNING from '../config/config';
+const jquery = require("jquery")
+window.$ = window.jQuery = jquery;
 import Backbone from "backbone";
+Backbone.$ = window.$;
 import _ from 'underscore';
 LIGHTNING.View.Worker = Backbone.View.extend(
   _.extend({}, LIGHTNING.Constants, LIGHTNING.Mixings, {

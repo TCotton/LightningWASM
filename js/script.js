@@ -75,6 +75,7 @@ LIGHTNING = (function () {
             let mimeArray = ['image/png', 'image/jpeg', 'image/jpg' ,'image/gif'];
             inputElement.addEventListener('change', function (event) {
                 //if (this.files[0].size > 65536) return;
+              debugger;
                 console.log(mimeArray.indexOf(this.files[0].type));
                 switch (this.files[0].type) {
                     case 'image/png':
