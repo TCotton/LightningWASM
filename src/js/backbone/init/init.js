@@ -1,3 +1,9 @@
+const jquery = require("jquery")
+window.$ = window.jQuery = jquery;
+import Backbone from "backbone";
+Backbone.$ = window.$;
+import _ from 'underscore';
+
 if (window.File && window.FileList && window.FileReader && window.Worker) {
 
   LIGHTNING.newModel = new LIGHTNING.Model.parent();

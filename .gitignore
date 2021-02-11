@@ -7,3 +7,4 @@ dist
 .idea/
 .dsconfig
 .parcel-cache
+.history
