@@ -1,11 +1,9 @@
-import LIGHTNING from '../config/config';
-import Backbone from "backbone";
-import _ from 'underscore';
-import {errorWrapper} from '../templates';
-const errorImage = import('../../../img/error-message.svg');
 const jquery = require("jquery")
 window.$ = window.jQuery = jquery;
+import Backbone from "backbone";
 Backbone.$ = window.$;
+import _ from 'underscore';
+
 LIGHTNING.View.AddImage = Backbone.View.extend(
   _.extend({}, LIGHTNING.Constants, LIGHTNING.Mixings, {
     el: '#wrapper',
@@ -48,7 +46,7 @@ LIGHTNING.View.AddImage = Backbone.View.extend(
     },
 
     submitImage: function (e, dataTransfer) {
-      let file, nonce;
+      let file,
       // added nonce for CRSF protection
       nonce = document.getElementById('input').getAttribute('data-nonce');
       if (nonce !== this.nonce) return;
@@ -70,16 +68,15 @@ LIGHTNING.View.AddImage = Backbone.View.extend(
         validate: true
       });
       if (this.model.set('file').validationError !== null) {
-        this.model.set('imageError', errorImage);
         this.model.set('error', this.model.set('file').validationError);
         this.render();
       } else {
         this.model.set('image', file);
         this.model.set('start', new Date().getTime());
-        this.model.set('maxHeight', Math.max(e.currentTarget.naturalHeight, e.currentTarget.naturalWidth))
       }
       e.preventDefault();
     },
+
     render: function () {
       this.resetHTML();
       document.getElementById('wrapper').appendChild(this.stringToObject(this.template(this.model.toJSON()), 'error'));

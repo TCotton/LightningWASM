@@ -1,32 +1,43 @@
 self.Module = {
-  wasmBinaryFile: '../static/image_compressor.wasm',
+  wasmBinaryFile: './image_compressor.wasm',
   print: log,
   printErr: logError
 };
-//import '../static/image_compressor';
-importScripts('../static/image_compressor');
 
-self.onmessage = e => {
-  switch (e.data.type) {
-    case 'image':
-      processImage(e.data);
+self.importScripts('./image_compressor.js');
+
+onmessage = function (event) {
+  const message = event.data;
+  switch (message.type) {
+    case 'file':
+      //FS.createDataFile('/', '../img/input.png', message.data, true, false);
+      break;
+    case 'command':
+      if (message.command === "go") {
+        processImage(event.data);
+      }
       break;
   }
 };
 
+self.postMessage({
+  'type': 'ready'
+});
+
 function processImage(args) {
   const {rgbData, width, height, fileSize, options} = args;
   try {
-    log(`Working...`);
+    postMessage({'type': 'start'});
     const buffer = Module._malloc(rgbData.byteLength);
     Module.HEAPU8.set(rgbData, buffer);
+    /*
     if (rgbData.byteLength !== width * height * 4) {
       self.postMessage({
         type: 'error',
         error: `Invalid data length: ${rgbData.byteLength}, expected ${width * height * 4}`
       });
       return;
-    }
+    }*/
     const compressedSizePointer = Module._malloc(4);
     const {maxColors, dithering} = options;
     const result = Module._compress(width, height, maxColors, dithering, buffer, compressedSizePointer);

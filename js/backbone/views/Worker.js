@@ -1,9 +1,9 @@
-import LIGHTNING from '../config/config';
-const jquery = require("jquery")
+const jquery = require("jquery");
 window.$ = window.jQuery = jquery;
 import Backbone from "backbone";
 Backbone.$ = window.$;
 import _ from 'underscore';
+
 LIGHTNING.View.Worker = Backbone.View.extend(
   _.extend({}, LIGHTNING.Constants, LIGHTNING.Mixings, {
 
@@ -17,31 +17,74 @@ LIGHTNING.View.Worker = Backbone.View.extend(
       // if PNG file then run the web worker and use the FileReader API
       if (this.model.get('image') == null) return;
       if (this.model.get('image') !== null && this.model.get('image').type !== 'image/png') return;
-      //if (document.getElementById('nopng').checked) return;
       let fileReader = new FileReader();
-    /*  let onloadend = function (event) {
-        let data = new Uint8Array(event.target.result);
-        this.worker.postMessage({
-          'type': 'file',
-          'data': data
-        });
-        this.worker.postMessage({
-          'type': 'command',
-          'command': 'go'
-        });
-      }.bind(this);*/
-    /*  if (fileReader.addEventListener) {
+
+      let onloadend = function (event) {
+        const result = event.target.result;
+        let data = new Uint8Array(result);
+        this.currentTask = {};
+        this.currentTask.fileSize = data.length;
+        this.canvasRender(data);
+      }.bind(this);
+
+      if (fileReader.addEventListener) {
         fileReader.addEventListener('loadend', onloadend, false);
       } else {
         fileReader.onloadend = onloadend;
-      }*/
+      }
       fileReader.readAsArrayBuffer(this.model.get('image'));
+    },
+
+    canvasRender: function (img) {
+      const canvas = document.createElement('canvas');
+      const context = canvas.getContext('2d');
+
+      const i = new Image;
+      this.currentTask = {};
+      const connected = new Promise((resolve) => {
+        i.onload = (e) => {
+          canvas.width = i.naturalWidth;
+          canvas.height = i.naturalHeight;
+          context.drawImage(e.path[0], 0, 0);
+          this.myData = context.getImageData(0, 0, i.naturalWidth, i.naturalWidth).data;
+          this.currentTask.width = i.naturalWidth;
+          this.currentTask.height = i.naturalHeight;
+          this.currentTask.rgbData = this.myData;
+          resolve();
+        }
+      })
+
+      connected.then(() => {
+        this.worker.postMessage({
+          'type': 'command',
+          'command': 'go',
+          rgbData: this.currentTask.rgbData,
+          width: this.currentTask.width,
+          height: this.currentTask.height,
+          fileSize: this.currentTask.fileSize,
+          whatever: 'here',
+          options: {
+            maxColors: 256,
+            dithering: 1,
+          }
+        });
+      });
+      i.src = window.URL.createObjectURL(new Blob([img], {type: "image/png"}));
     },
 
     webWorker: function () {
       this.worker.onmessage = function (event) {
         let message = event.data;
         switch (message.type) {
+          case 'log':
+            console.log(event.data.msg, 'log');
+            break;
+          case 'logError':
+            console.error(event.data.msg, 'logError');
+            break;
+          case 'error':
+            console.dir(event.data.error, 'error');
+            break;
           case 'stdout':
             if (message.line.indexOf('filesize reduction') !== -1) {
               this.model.set('fileSizeReduction', message.line.trim().replace(/\((.+)\)/g, "$1"));
@@ -51,7 +94,7 @@ LIGHTNING.View.Worker = Backbone.View.extend(
             console.log('start');
             document.body.classList.add('holding');
             break;
-          case 'done':
+          case 'result':
             document.body.classList.remove('holding');
             this.model.set('dataURI', this.getImage(message.data));
             this.render();

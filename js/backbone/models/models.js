@@ -1,8 +1,8 @@
-import LIGHTNING from '../config/config';
 const jquery = require("jquery")
 window.$ = window.jQuery = jquery;
 import Backbone from "backbone";
 Backbone.$ = window.$;
+
 LIGHTNING.Model.parent = Backbone.Model.extend({
 
     defaults: {
@@ -17,7 +17,8 @@ LIGHTNING.Model.parent = Backbone.Model.extend({
         imageType: null,
         start: null,
         end: null,
-        imageError: null
+        currentTask: {},
+        myData: null,
     },
 
     initialize: function () {

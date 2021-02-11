@@ -6,8 +6,8 @@ const Module = {
 //importScripts('../static/pngcrush.js');
 
 let line = '';
-
-Module.preRun = function () {
+// emscripten below
+/*Module.preRun = function () {
   FS.init(function () {
     return null;
   }, function (data) {
@@ -22,12 +22,8 @@ Module.preRun = function () {
       line += String.fromCharCode(data);
     }
   });
-};
+};*/
 
-function getFileData(fileName) {
-  const data = FS.root.contents[fileName].contents;
-  return new Uint8Array(data).buffer;
-}
 
 onmessage = function (event) {
   const message = event.data;

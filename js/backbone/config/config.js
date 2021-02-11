@@ -3,6 +3,7 @@ window.$ = window.jQuery = jquery;
 import Backbone from "backbone";
 Backbone.$ = window.$;
 import _ from 'underscore';
+
 const LIGHTNING = {
   Model: {},
   Collection: {},
@@ -11,7 +12,7 @@ const LIGHTNING = {
 
 LIGHTNING.Constants = {
   URL: window.URL || window.webkitURL,
-  worker: new Worker('../../worker.js'),
+  worker: new Worker('./js/new_worker.js'),
   nonce: Math.random().toString(36).slice(2) + Math.random().toString(36).slice(2)
 };
 
@@ -58,5 +59,3 @@ LIGHTNING.Mixings = {
     }
   }
 };
-
-export default LIGHTNING;
