@@ -17,9 +17,9 @@ LIGHTNING.View.Worker = Backbone.View.extend(
       // if PNG file then run the web worker and use the FileReader API
       if (this.model.get('image') == null) return;
       if (this.model.get('image') !== null && this.model.get('image').type !== 'image/png') return;
-      if (document.getElementById('nopng').checked) return;
+      //if (document.getElementById('nopng').checked) return;
       let fileReader = new FileReader();
-      let onloadend = function (event) {
+    /*  let onloadend = function (event) {
         let data = new Uint8Array(event.target.result);
         this.worker.postMessage({
           'type': 'file',
@@ -29,12 +29,12 @@ LIGHTNING.View.Worker = Backbone.View.extend(
           'type': 'command',
           'command': 'go'
         });
-      }.bind(this);
-      if (fileReader.addEventListener) {
+      }.bind(this);*/
+    /*  if (fileReader.addEventListener) {
         fileReader.addEventListener('loadend', onloadend, false);
       } else {
         fileReader.onloadend = onloadend;
-      }
+      }*/
       fileReader.readAsArrayBuffer(this.model.get('image'));
     },
 
