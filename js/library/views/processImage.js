@@ -16,6 +16,7 @@ LIGHTNING.View.ProcessImage = Backbone.View.extend(
     getImageDetails: function () {
       if (this.model.get('image') == null) return;
       if (this.model.get('image') !== null && (this.model.get('image').type !== 'image/png' && this.model.get('image').type !== 'image/jpeg')) return;
+      document.body.classList.add('holding');
       let fileReader = new FileReader();
       this.params = {
         maxWidthOrHeight: null,
@@ -69,6 +70,7 @@ LIGHTNING.View.ProcessImage = Backbone.View.extend(
           const a = new FileReader();
           a.onload = (e) => {
             this.model.set('dataURI', e.target.result);
+            document.body.classList.remove('holding');
             this.render();
           }
           a.readAsDataURL(compressedFile);
