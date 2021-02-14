@@ -16,10 +16,13 @@
   "dependencies": {
     "backbone": "1.0.0",
     "browser-image-compression": "^1.0.14",
+    "config": "^3.3.3",
+    "init": "^0.1.2",
     "jquery": "2.1.0",
     "js": "^0.1.0",
     "parcel-plugin-static-files-copy": "2.5.1",
-    "underscore": "1.5.1"
+    "underscore": "1.5.1",
+    "views": "^1.0.2"
   },
   "devDependencies": {
     "autoprefixer": "9.8.6",

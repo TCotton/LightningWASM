@@ -1,3 +1,9 @@
+const jquery = require("jquery")
+window.$ = window.jQuery = jquery;
+import Backbone from "backbone";
+Backbone.$ = window.$;
+import {LIGHTNING} from '../config';
+
 LIGHTNING.Model.parent = Backbone.Model.extend({
 
     defaults: {

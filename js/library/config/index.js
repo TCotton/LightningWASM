@@ -1,4 +1,9 @@
-const LIGHTNING = {
+const jquery = require("jquery")
+window.$ = window.jQuery = jquery;
+import Backbone from "backbone";
+Backbone.$ = window.$;
+import _ from 'underscore';
+export const LIGHTNING = {
   Model: {},
   Collection: {},
   View: {}
@@ -16,7 +21,6 @@ LIGHTNING.Mixings = {
   },
 
   getImage: function (fileData, imageType) {
-    debugger;
     let src, view, binary, i, l;
     if (imageType !== 0) {
       // if PNG object to data URI
@@ -54,5 +58,3 @@ LIGHTNING.Mixings = {
     }
   }
 };
-
-export default LIGHTNING;

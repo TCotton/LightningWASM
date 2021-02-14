@@ -1,3 +1,10 @@
+const jquery = require("jquery");
+window.$ = window.jQuery = jquery;
+import Backbone from "backbone";
+Backbone.$ = window.$;
+import _ from 'underscore';
+import {LIGHTNING} from '../config';
+
 LIGHTNING.View.Worker = Backbone.View.extend(
   _.extend({}, LIGHTNING.Constants, LIGHTNING.Mixings, {
 
@@ -19,26 +26,6 @@ LIGHTNING.View.Worker = Backbone.View.extend(
         this.currentTask = {};
         this.currentTask.fileSize = data.length;
         this.canvasRender(data);
-        this.worker.onmessage = e => {
-          switch (e.data.type) {
-            case 'log':
-              debugger;
-              console.log(e.data.msg);
-              break;
-            case 'logError':
-              debugger;
-              console.error(e.data.msg);
-              break;
-            case 'result':
-              debugger;
-              console.dir(e.data.result);
-              break;
-            case 'error':
-              debugger;
-              console.dir(e.data.error);
-              break;
-          }
-        }
       }.bind(this);
 
       if (fileReader.addEventListener) {
@@ -64,12 +51,11 @@ LIGHTNING.View.Worker = Backbone.View.extend(
           this.currentTask.width = i.naturalWidth;
           this.currentTask.height = i.naturalHeight;
           this.currentTask.rgbData = this.myData;
-          resolve()
+          resolve();
         }
       })
 
       connected.then(() => {
-        console.dir(this.currentTask);
         this.worker.postMessage({
           'type': 'command',
           'command': 'go',
@@ -91,6 +77,15 @@ LIGHTNING.View.Worker = Backbone.View.extend(
       this.worker.onmessage = function (event) {
         let message = event.data;
         switch (message.type) {
+          case 'log':
+            console.log(event.data.msg, 'log');
+            break;
+          case 'logError':
+            console.error(event.data.msg, 'logError');
+            break;
+          case 'error':
+            console.dir(event.data.error, 'error');
+            break;
           case 'stdout':
             if (message.line.indexOf('filesize reduction') !== -1) {
               this.model.set('fileSizeReduction', message.line.trim().replace(/\((.+)\)/g, "$1"));

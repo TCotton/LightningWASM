@@ -1,10 +1,11 @@
-import "./backbone/config/config";
-import "./backbone/models/models";
-import "./backbone/views/AddImage"
-import "./backbone/views/Worker";
-import "./backbone/views/ImageDetails";
-import "./backbone/views/processImage";
-import "./backbone/init/init";
+import "./library/config/";
+import "./library/models/";
+import "./library/views/AddImage"
+import "./library/views/Worker";
+import "./library/views/ImageDetails";
+import "./library/views/processImage";
+import "./library/init/";
 //import "./new_worker";
 console.log('here');
 alert('YES!!!');
+

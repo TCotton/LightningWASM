@@ -1,11 +1,10 @@
-import LIGHTNING from '../config/config';
-import Backbone from "backbone";
-import _ from 'underscore';
-const errorImage = import('../../../img/error-message.svg');
 
 const jquery = require("jquery")
 window.$ = window.jQuery = jquery;
+import Backbone from "backbone";
 Backbone.$ = window.$;
+import _ from 'underscore';
+import {LIGHTNING} from '../config';
 LIGHTNING.View.AddImage = Backbone.View.extend(
   _.extend({}, LIGHTNING.Constants, LIGHTNING.Mixings, {
     el: '#wrapper',

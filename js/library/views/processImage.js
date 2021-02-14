@@ -3,6 +3,7 @@ window.$ = window.jQuery = jquery;
 import Backbone from "backbone";
 Backbone.$ = window.$;
 import _ from 'underscore';
+import {LIGHTNING} from '../config';
 console.log('here');
 LIGHTNING.View.ProcessImage = Backbone.View.extend(
 
