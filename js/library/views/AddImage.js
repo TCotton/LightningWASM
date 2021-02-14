@@ -1,10 +1,11 @@
-
-const jquery = require("jquery")
-window.$ = window.jQuery = jquery;
+import jquery from "jquery";
 import Backbone from "backbone";
-Backbone.$ = window.$;
 import _ from 'underscore';
 import {LIGHTNING} from '../config';
+import imageCompression from 'browser-image-compression';
+
+window.$ = window.jQuery = jquery;
+Backbone.$ = window.$;
 LIGHTNING.View.AddImage = Backbone.View.extend(
   _.extend({}, LIGHTNING.Constants, LIGHTNING.Mixings, {
     el: '#wrapper',
@@ -48,8 +49,8 @@ LIGHTNING.View.AddImage = Backbone.View.extend(
 
     submitImage: function (e, dataTransfer) {
       let file,
-      // added nonce for CRSF protection
-      nonce = document.getElementById('input').getAttribute('data-nonce');
+        // added nonce for CRSF protection
+        nonce = document.getElementById('input').getAttribute('data-nonce');
       if (nonce !== this.nonce) return;
       //this.el.setAttribute('disabled', 'disabled');
 

@@ -1,4 +1,4 @@
-const jquery = require("jquery");
+import jquery from "jquery";
 window.$ = window.jQuery = jquery;
 import Backbone from "backbone";
 Backbone.$ = window.$;
