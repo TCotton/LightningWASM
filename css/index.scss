@@ -133,14 +133,55 @@ main {
 }
 
 .output {
-  //min-height: 400px;
+  min-height: 400px;
+  display: flow-root;
   transform: skew(-20deg);
   background: #eeeeee;
   border-radius: 30px;
-  padding: var(--marginx4) 20px;
+  padding: var(--marginx2) 20px;
   box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.6);
   position: relative;
   margin: var(--marginx6) 0 0 0;
+}
+
+.left {
+  float: left;
+  width: 49%;
+  margin: 0 2% 0 0;
+  transform: skew(10deg);
+}
+
+.right {
+  float: left;
+  width: 49%;
+  transform: skew(10deg);
+  img {
+    margin-bottom: var(--margin);
+  }
+}
+
+.image-name {
+  @include font-calculator($baseFontFamily, 18px);
+  color: #465CBC;
+  text-align: center;
+}
+
+.image-info p {
+  @include font-calculator($baseFontFamily, 16px);
+  color: #B0252A;
+}
+
+.dataURI {
+  overflow: scroll;
+  max-height: 400px;
+  font-size: 1.4rem;
+  margin: var(--margin);
+  background: #F8F5D5;
+  padding: var(--margin);
+}
+
+.image-info p span {
+  color: #465CBC;
 }
 
 #holding-image-inner {
@@ -309,4 +350,5 @@ input[type=file] {
   -webkit-text-stroke-color: #b3d4fc;
   -webkit-text-stroke-width: 1px;
 }
+
 

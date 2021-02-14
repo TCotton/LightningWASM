@@ -89,11 +89,10 @@
     <div class="image-info">
       <p><span>Original file size:</span> <%= originalImageSize %> bytes</p>
       <% if (fileSizeReduction !== null) { %>
-      <p><span>After optimisation:</span> <%= fileSizeReduction %></p>
+      <p><span>After optimisation:</span> <%= fileSizeReduction %> bytes</p>
       <% } else { %>
       <p><span>No image optimisation has taken place</span></p>
       <% } %>
-      <p><span>Data URI size:</span> <%= dataURIsize %> bytes</p>
       <% var elapsed = (end - start) / 1000 %>
       <p>Processed in <% print (elapsed) %> seconds</p>
       <% if (fileSizeReduction !== null && (originalImageSize < dataURIsize)) { %>

@@ -1,10 +1,11 @@
 import jquery from "jquery";
-window.$ = window.jQuery = jquery;
 import Backbone from "backbone";
 import _ from 'underscore';
 import {LIGHTNING} from '../config';
-Backbone.$ = window.$;
 import imageCompression from 'browser-image-compression';
+
+window.$ = window.jQuery = jquery;
+Backbone.$ = window.$;
 LIGHTNING.View.ProcessImage = Backbone.View.extend(
   _.extend({}, LIGHTNING.Constants, LIGHTNING.Mixings, {
     initialize: function () {
@@ -14,7 +15,7 @@ LIGHTNING.View.ProcessImage = Backbone.View.extend(
 
     getImageDetails: function () {
       if (this.model.get('image') == null) return;
-      if (this.model.get('image') !== null && this.model.get('image').type !== 'image/png') return;
+      if (this.model.get('image') !== null && (this.model.get('image').type !== 'image/png' && this.model.get('image').type !== 'image/jpeg')) return;
       let fileReader = new FileReader();
       this.params = {
         maxWidthOrHeight: null,
@@ -50,9 +51,9 @@ LIGHTNING.View.ProcessImage = Backbone.View.extend(
       i.src = window.URL.createObjectURL(new Blob([img], {type: imageFormat}));
     },
 
-    imageCompress: function(data) {
+    imageCompress: function (data) {
       const imageFile = data;
-      console.log('originalFile instanceof Blob', imageFile instanceof Blob); // true
+      console.log('originalFile instanceof Blob', imageFile instanceof Blob);
       console.log(`originalFile size ${imageFile.size} bytes`);
 
       const options = {
@@ -62,13 +63,18 @@ LIGHTNING.View.ProcessImage = Backbone.View.extend(
       }
       imageCompression(imageFile, options)
         .then(function (compressedFile) {
-          console.log('compressedFile instanceof Blob', compressedFile instanceof Blob); // true
-          console.log(`compressedFile size ${compressedFile.size} bytes`); // smaller than maxSizeMB
-
-          console.dir(compressedFile);
-        })
+          console.log('compressedFile instanceof Blob', compressedFile instanceof Blob);
+          console.log(`compressedFile size ${compressedFile.size} bytes`);
+          this.model.set('fileSizeReduction', compressedFile.size);
+          const a = new FileReader();
+          a.onload = (e) => {
+            this.model.set('dataURI', e.target.result);
+            this.render();
+          }
+          a.readAsDataURL(compressedFile);
+        }.bind(this))
         .catch(function (error) {
-          console.log(error.message);
+          console.error(error.message);
         });
     },
 
