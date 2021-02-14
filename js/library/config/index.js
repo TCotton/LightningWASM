@@ -36,7 +36,7 @@ LIGHTNING.Mixings = {
 
     // set to memory the size of the data URI
     this.model.set('dataURIsize', encodeURI(src).split(/%..|./).length - 1);
-    // retun the data URI
+    // return the data URI
     return src;
   },
 
