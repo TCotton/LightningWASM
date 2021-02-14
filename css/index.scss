@@ -26,6 +26,7 @@ body {
 
 html {
   font-size: #{$baseFontSize};
+  overflow-x: hidden;
 }
 
 body {
@@ -39,6 +40,24 @@ body {
   min-width: 960px;
   max-width: 70%;
   margin: var(--marginx2) auto;
+  @media (max-width: $first_query) {
+    min-width: fit-content;
+    max-width: 90%;
+    margin: var(--margin) auto;
+  }
+}
+
+#credits a {
+  font-size: 1.2em;
+  font-family: RoyLichtensteinRegular, sans-serif;
+  color: #465CBC;
+  text-decoration: none;
+}
+
+@media (max-width: $first_query) {
+  #credits {
+    margin-top: var(--marginx4);
+  }
 }
 
 h1,h2,h3,h4,h5,h6 {
@@ -49,34 +68,28 @@ p {
   @include font-calculator($baseFontFamily, 16px);
 }
 
-.output {
-  position: relative;
-  #instructions {
-    position: absolute;
-    right: 0;
-    top: 70px;
-    z-index: 100;
-    width: 55%;
-    min-height: 500px;
-    min-width: 500px;
-    display: grid;
-    place-items: center;
-    background-color: rgba(248, 245, 215, 1);
-    background-image: radial-gradient(#ffffff 20%, transparent 20%),
-    radial-gradient(#ffffff 20%, transparent 20%);
-    background-position: 0 0, 5px 5px;
-    background-size: 10px 10px;
-    color: #010000;
-    //background: rgb();
-    @media only screen and (max-height: 1800px) {
-      top: 80px;
-
-    }
-  }
-  #instructions-image {
-    width: 85%;
-    margin-top: 100px;
-  }
+a:link {
+  color:  #465CBC;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-skip-ink: auto;
+  text-decoration-color: #B0252A;
+}
+a:visited {
+  color:  #465CBC;
+  text-decoration-color: #B0252A;
+}
+a:focus {
+  color:  #465CBC;
+  text-decoration-color: #B0252A;
+}
+a:hover {
+  color:  #465CBC;
+  text-decoration: none;
+  text-decoration-color: #B0252A;
+}
+a:active {
+  color:  #465CBC;
 }
 
   /*.output {
@@ -113,6 +126,45 @@ p {
   box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.6);
   background: #F8F5D5 url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAEElEQVQImWM4c+bMfwY6AABbTwNktfrGigAAAABJRU5ErkJggg==");
   color: #010000;
+  @media (max-width: $first_query) {
+    margin: var(--marginx2) 0;
+    padding: var(--margin) var(--marginx4) var(--marginx2) var(--marginx4);
+  }
+  @media (max-width: $second_query) {
+    width: fit-content;
+    margin: var(--marginx2) var(--marginx4);
+  }
+}
+
+#inner-title-h1 img {
+  height: 400px;
+  position: absolute;
+  top: -70px;
+  left: 370px;
+  z-index: 0;
+  @media (max-width: $second_query) {
+    display: none;
+  }
+}
+
+#title h1 {
+  @include font-calculator($baseFontFamily, 60px);
+  font-size: clamp(4rem, 10vw, 6rem);
+  color: #465CBC;
+  transform: skew(0deg);
+  -webkit-text-fill-color: #465CBC;
+  -webkit-text-stroke-color: #B0252A;
+  -webkit-text-stroke-width: 2px;
+}
+
+#title h2 {
+  @include font-calculator($baseFontFamily, 22px);
+  transform: skew(10deg);
+}
+
+#title h3 {
+  @include font-calculator($baseFontFamily, 18px);
+  transform: skew(10deg);
 }
 
 main {
@@ -123,13 +175,9 @@ main {
   transform: skew(10deg);
   border-radius: 30px;
   box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.3);
-}
-
-.png-checkbox {
-  text-align: center;
-  transform: skew(-10deg);
-  margin: 20px 0 0 0;
-  @include font-calculator($baseFontFamily, 16px);
+  @media (max-width: $second_query) {
+    width: fit-content;
+  }
 }
 
 .output {
@@ -148,12 +196,21 @@ main {
   float: left;
   width: 49%;
   margin: 0 2% 0 0;
+  @media (max-width: $first_query) {
+    float: none;
+    width: auto;
+    margin: var(--marginx3) 0 0 0;
+  }
   transform: skew(10deg);
 }
 
 .right {
   float: left;
   width: 49%;
+  @media (max-width: $first_query) {
+    float: none;
+    width: auto;
+  }
   transform: skew(10deg);
   img {
     margin-bottom: var(--margin);
@@ -175,6 +232,7 @@ main {
   font-family: anonymous-pro, monospace;
   font-size: 1.4rem;
 }
+
 pre {
   white-space: pre-wrap;
   word-wrap: break-word;
@@ -249,36 +307,6 @@ pre {
   @include font-calculator($baseFontFamily, 20px);
 }
 
-#inner-title-h1 {}
-
-#inner-title-h1 img {
-  height: 400px;
-  position: absolute;
-  top: -70px;
-  left: 370px;
-  z-index: 0;
-}
-
-#title h1 {
-  @include font-calculator($baseFontFamily, 60px);
-  color: #465CBC;
-  transform: skew(0deg);
-  //margin: 0 0 0 0;
-  -webkit-text-fill-color: #465CBC;
-  -webkit-text-stroke-color: #B0252A;
-  -webkit-text-stroke-width: 2px;
-}
-
-#title h2 {
-  @include font-calculator($baseFontFamily, 22px);
-  transform: skew(10deg);
-}
-
-#title h3 {
-  @include font-calculator($baseFontFamily, 18px);
-  transform: skew(10deg);
-}
-
 #instructions::after {
   content: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAqCAMAAAApppNLAAAAgVBMVEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADCycEAAAAAAAAPDw88PjsAAABAQkAAAADg6N+wtq+AhX9pbGjR2dBgY2AeHx4tLi2QlY+kqqQAAADS2tGMkYsqLCpwdHAODw6orqdUV1TEy8M4OjgcHRyaoJng6N+kLp/sAAAAHnRSTlMA70C/EIAg389wr1DvMI/v75/fYO/f3+/v3+/v3+8YHESIAAABBElEQVR4XuWTx47DMAwFJctyL0m2N6Zv+/8PXBjIAuaLXph75j4gOCCdYhDN5lexXsmEdoJWvrXyMErCuTTm/kkk4fRa2c+V7k2STq2d3Ux595J2lnrMWi1PnArGqOWJI4pPtTxxMqUc/5ffCqASpMY8elQqSIBjnhdo+MgTHCblY0QlFPwKvqblX9Dwd06TwZjuFZUmVwIk2CaWLzMQIMHmfPmYu3PK2RP8jBi4dwly4fjaIZiABkYiHdI6RkOUAQKTBEZgI0EEwU4QIDAS7cB2ggYC2wnK1pkUNDCnVccFgQmRBuYEelwcj99rU9Dv5bT0uDiRBDYSwPfaeDwumwIC3xZ//pFuwdi+Fs4AAAAASUVORK5CYII=");
   position: absolute;
@@ -298,6 +326,9 @@ pre {
   position: relative;
   transition: all 0.4s;
   display: flex;
+  @media (max-width: $second_query) {
+    width: fit-content;
+  }
 }
 
 #file-wrapper:hover {
@@ -336,6 +367,43 @@ input[type=file] {
 
 #instructions-image {
   transform: skew(10deg);
+}
+.output {
+  position: relative;
+  #instructions {
+    position: absolute;
+    right: 0;
+    top: 70px;
+    z-index: 100;
+    width: 55%;
+    min-height: 400px;
+    min-width: 500px;
+    display: grid;
+    place-items: center;
+    background-color: rgba(248, 245, 215, 1);
+    background-image: radial-gradient(#ffffff 20%, transparent 20%),
+    radial-gradient(#ffffff 20%, transparent 20%);
+    background-position: 0 0, 5px 5px;
+    background-size: 10px 10px;
+    color: #010000;
+    @media (max-width: $first_query) {
+      width: fit-content;
+    }
+    @media (max-width: $second_query) {
+      position: unset;
+      min-width: 0;
+    }
+    @media only screen and (max-height: 1800px) {
+      top: 80px;
+    }
+  }
+  #instructions-image {
+    width: 85%;
+    margin-top: 100px;
+    @media (max-width: $first_query) {
+      display: none;
+    }
+  }
 }
 
 .inner-error {
