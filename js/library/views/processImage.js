@@ -76,6 +76,7 @@ LIGHTNING.View.ProcessImage = Backbone.View.extend(
           a.readAsDataURL(compressedFile);
         }.bind(this))
         .catch(function (error) {
+          document.body.classList.remove('holding');
           console.error(error.message);
         });
     },
